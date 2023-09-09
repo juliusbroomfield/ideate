@@ -1,8 +1,8 @@
-import React from 'react'; // Often necessary to import React, depending on your React version and setup.
+import React from 'react'; 
 import './App.css';
 import LoginPage from "./components/LoginPage";
+import VideoRecorder from "./components/video"; // Import the VideoRecorder component
 
-// Missing imports for react-router-dom
 import {
   BrowserRouter,
   Routes,
@@ -13,7 +13,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/" element={<VideoRecorder />} /> {/* Make VideoRecorder the default component */}
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </BrowserRouter>
   );

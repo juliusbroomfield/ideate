@@ -39,7 +39,7 @@ export default function SignInPage() {
             />
           </div>
           <div className="signin-form-group">
-            <Link to="/welcome" state={userState}>
+            <Link to="/record" state={userState}>
               <button className="signin-button" id="sub_btn" type="button">
                 Login
               </button>
