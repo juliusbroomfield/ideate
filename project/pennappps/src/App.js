@@ -13,8 +13,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<VideoRecorder />} /> {/* Make VideoRecorder the default component */}
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/record" element={<VideoRecorder />} /> {/* Make VideoRecorder the default component */}
+        <Route path="/" element={<LoginPage />} />
       </Routes>
     </BrowserRouter>
   );
