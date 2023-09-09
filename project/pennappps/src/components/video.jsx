@@ -4,25 +4,47 @@ import Webcam from 'react-webcam';
 function VideoRecorder() {
     const webcamRef = useRef(null);
     const [recording, setRecording] = useState(false);
-    const [videoSrc, setVideoSrc] = useState(null);
-    
+    const [recordedChunks, setRecordedChunks] = useState([]);
+    const [mediaRecorder, setMediaRecorder] = useState(null);
+
     const handleStartRecording = () => {
+        const stream = webcamRef.current.stream;
+        const newMediaRecorder = new MediaRecorder(stream);
+
+        newMediaRecorder.ondataavailable = handleDataAvailable;
+        newMediaRecorder.start(10); // Collect 10ms of data
+
+        setMediaRecorder(newMediaRecorder);
         setRecording(true);
-        webcamRef.current.startRecording();
+    };
+
+    const handleDataAvailable = (event) => {
+        if (event.data.size > 0) {
+            setRecordedChunks((prev) => prev.concat([event.data]));
+        }
     };
 
     const handleStopRecording = () => {
-        setRecording(false);
-        const video = webcamRef.current.stopRecording();
-        setVideoSrc(video);
+        if (mediaRecorder) {
+            mediaRecorder.stop();
+            setRecording(false);
+        }
     };
 
     const handleDownload = () => {
-        if (videoSrc) {
-            const link = document.createElement('a');
-            link.href = videoSrc;
-            link.download = 'recorded_video.webm';
-            link.click();
+        if (recordedChunks.length) {
+            const blob = new Blob(recordedChunks, { type: 'video/webm' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'react-webcam-record.webm';
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => {
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            }, 100);
         }
     };
 
@@ -31,19 +53,18 @@ function VideoRecorder() {
             <Webcam
                 audio={true}
                 ref={webcamRef}
-                style={{ width: '50%', display: 'block', marginLeft: 'auto', marginRight: 'auto' }} // Adjust size to 50% and center it
+                style={{ width: '50%', display: 'block', marginLeft: 'auto', marginRight: 'auto' }} 
             />
-            <div style={{ textAlign: 'center' }}> {/* Center the buttons */}
+            <div style={{ textAlign: 'center' }}>
                 {recording ? (
                     <button onClick={handleStopRecording}>Stop Recording</button>
                 ) : (
                     <button onClick={handleStartRecording}>Start Recording</button>
                 )}
-                {videoSrc && <button onClick={handleDownload}>Download Video</button>}
+                {recordedChunks.length > 0 && <button onClick={handleDownload}>Download Video</button>}
             </div>
         </div>
     );
 }
 
 export default VideoRecorder;
-
