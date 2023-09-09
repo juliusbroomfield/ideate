@@ -2,6 +2,90 @@
   text-align: center;
 }
 
+/* Sign in Page Styles */
+.signin-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: black;
+}
+
+.signin-content {
+  background-color: #2E2E2E; /* Light Gray */
+  border-radius: 10px;
+  padding: 2rem;
+  width: 350px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+}
+
+.signin-heading {
+  color: white;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.signin-form-group {
+  margin-bottom: 1rem;
+}
+
+.signin-form-group label {
+  display: block;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.signin-form-input {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #FFFFFF;
+  background-color: #2E2E2E;
+  color: white;
+  outline: none;
+}
+
+.signin-form-input:focus {
+  border-color: #A9A9A9; /* Darker gray when input is focused */
+}
+
+.signin-link {
+  color: #A9A9A9; /* A bit brighter gray for links */
+  text-decoration: none;
+}
+
+.signin-link:hover {
+  text-decoration: underline;
+}
+
+.right-label {
+  float: right;
+}
+
+.signin-button {
+  background-color: #A9A9A9; /* Bright gray */
+  color: black;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.signin-button:hover {
+  background-color: white;
+}
+
+.signin-footer {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.signin-footer p {
+  color: white;
+}
+
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
