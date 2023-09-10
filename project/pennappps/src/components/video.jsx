@@ -3,12 +3,14 @@ import Webcam from 'react-webcam';
 import '../App.css';
 import Ide from './Ide';
 import github from '../assets/github-mark-white.svg'
+import axious from "axious";
 
 function VideoRecorder() {
     const webcamRef = useRef(null);
     const [recording, setRecording] = useState(false);
     const [recordedChunks, setRecordedChunks] = useState([]);
     const [mediaRecorder, setMediaRecorder] = useState(null);
+    const [ideContent, setIdeContent] = useState("");
     
 
     const handleStartRecording = () => {
@@ -100,10 +102,10 @@ function VideoRecorder() {
                 </div>
     
                 </div>
-                <a className='img-link' href="
-                ">
-                    <img className='img' src={github} alt="" />
-                </a>
+                <button className='img-link'>
+    <img className='img' src={github} alt="Publish to Github" />
+</button>
+
             </div>
     );
 }

@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, jsonify, url_for, render_template
+from flask import Flask, request, redirect, jsonify, url_for, render_template, session
 from flask_cors import CORS
 import requests
 import os
@@ -49,7 +49,8 @@ def video_detect_text(path):
 
 
 @app.route('/')
-def text_to_code_gpt(language, text):
+def text_to_code_gpt(text):
+    language = 'Python'
     openai.api_key = openai_api_key
 
     response = openai.ChatCompletion.create(
@@ -158,9 +159,12 @@ def video():
             
             translated_code = text_to_code_gpt('Java', ocr_text)
 
+            session['translated_code'] = translated_code
+
             return redirect(url_for('index'))
         
     elif request.method == 'GET':
+        translated_code = session.get('translated_code')
         if translated_code is None:
             return jsonify({'error': 'No code generated yet'})
         
