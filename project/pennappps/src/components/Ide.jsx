@@ -11,6 +11,23 @@ export default function Ide() {
   const [language, setLanguage] = useState('python');
   const [isOutputVisible, setIsOutputVisible] = useState(false);
 
+  const [gptCode, setGptCode] = useState('');
+
+  const fetchGptCode = async () => {
+    try {
+        const response = await axios.get('/textgpt'); // adjust the route if necessary
+        if (response.data.code) {
+            setGptCode(response.data.code);
+            setCode(response.data.code);  // set the fetched code as the value in the IDE
+        } else {
+            console.error("Failed to fetch GPT generated code.");
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
   const toggleOutput = () => {
     setIsOutputVisible(!isOutputVisible);
 };
@@ -110,7 +127,7 @@ export default function Ide() {
         width="800px"
         borderRadius="5px"
         defaultLanguage={languageModes[language]}
-        defaultValue="def hello():"
+        value={code}
         onChange={handleCodeChange}
         theme="vs-dark"
         options={{

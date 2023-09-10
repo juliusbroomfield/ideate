@@ -47,6 +47,7 @@ def video_detect_text(path):
         return None
 
 
+
 @app.route('/')
 def text_to_code_gpt(language, text):
     openai.api_key = openai_api_key
@@ -143,7 +144,7 @@ def upload_video():
         return jsonify({'translated_code': translated_code})
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/video', methods=['GET', 'POST'])
 def video():
     if request.method == 'POST':
         uploaded_file = request.files['file']
