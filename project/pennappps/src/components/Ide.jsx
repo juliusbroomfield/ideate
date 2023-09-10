@@ -2,11 +2,21 @@ import React, { useState } from 'react';
 import Editor from '@monaco-editor/react';
 import axios from 'axios';
 import '../App.css';
+import play from '../assets/play.png'
+
 
 export default function Ide() {
   const [code, setCode] = useState('');
   const [output, setOutput] = useState('');
   const [language, setLanguage] = useState('python');
+  const [isOutputVisible, setIsOutputVisible] = useState(false);
+
+  const toggleOutput = () => {
+    setIsOutputVisible(!isOutputVisible);
+};
+
+
+
 
   const languageModes = {
     'python': 'python',
@@ -76,21 +86,27 @@ export default function Ide() {
     }
   };
 
-  const handleLanguageChange = e => {
-    setLanguage(e.target.value);
+  const handleLanguageChange = langKey => {
+    setLanguage(langKey);
   }
+  
 
   return (
     <div className='ide__container'>
-      <div className='ide__top'> <select className='ide__dropdown' onChange={handleLanguageChange}>
-        <option className='ide__drop' value="python">Python</option>
-        <option className='ide__drop' value="javascript">JavaScript</option>
-        <option className='ide__drop' value="java">Java</option>
-        <option className='ide__drop' value="c_cpp">C++</option>
-      </select>
-      <button className='ide__btn' onClick={handleRunClick}>Run</button></div>
+      <div className="dropdown">
+  <button className="dropdown-button">
+    {languageModes[language]} <i className="arrow-down"></i>
+  </button>
+  <div className="dropdown-content">
+    {Object.keys(languageModes).map(langKey => (
+      <a key={langKey} href="#" onClick={() => handleLanguageChange(langKey)}>
+        {languageModes[langKey]}
+      </a>
+    ))}
+  </div>
+</div>
       <Editor
-        height="500px"
+        height="400px"
         width="800px"
         borderRadius="5px"
         defaultLanguage={languageModes[language]}
@@ -98,21 +114,42 @@ export default function Ide() {
         onChange={handleCodeChange}
         theme="vs-dark"
         options={{
-          fontSize: 20,
+          fontSize: 14,
           borderRadius: 10
       }}
       />
-      <div style={{
-        backgroundColor: '#1e1e1e', 
-        color: '#CCC',
-        padding: '10px',
-        borderRadius: '5px',
-        marginTop: '10px',
-        fontFamily: 'Courier, monospace',
-        whiteSpace: 'pre-wrap'
-      }}>Output: {output}</div>
+      <div className='console'>
+    <div 
+        className={`console-output ${isOutputVisible ? 'visible' : ''}`} 
+        style={{
+            backgroundColor: '', 
+            color: '#000',
+            padding: '10px',
+            borderRadius: '5px',
+            fontFamily: 'Courier, monospace',
+            whiteSpace: 'pre-wrap',
+            maxHeight: isOutputVisible ? 'auto' : '0'
+        }}
+    >
+        {isOutputVisible && output}
+    </div>
+
+    <div className="console-controls">
+        <span className="console-label" onClick={toggleOutput}>
+            Console {isOutputVisible ? '▲' : '▼'}
+        </span>
+
+        <button className='ide__btn' onClick={handleRunClick}>
+            Run
+        </button>
+    </div>
+</div>
+
+
+
 
     </div>
     
   );
 }
+
