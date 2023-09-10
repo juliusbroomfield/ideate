@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  background: linear-gradient(135deg, #000310 0%, #2a0147 300%) !important;
+  height: 100vh;
 }
 
 /* Sign in Page Styles */
@@ -12,11 +14,9 @@
 }
 
 .signin-content {
-  background-color: #ffffff; /* Light Gray */
   border-radius: 10px;
   padding: 2rem;
   width: 350px;
-  box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.5);
 }
 
 .signin-heading {
@@ -63,18 +63,18 @@
 }
 
 .signin-button {
-  background-color: #000000; /* Bright gray */
-  color: rgb(255, 255, 255);
-  padding: 0.5rem 1rem;
+  background-color: #ffffff; /* Bright gray */
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  padding: 0.7rem 1rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .signin-button:hover {
-  background-color: rgb(255, 0, 0);
-}
+  box-shadow: 0 0px 16px rgb(255, 255, 255); /* X-offset, Y-offset, blur-radius, color */}
 
 .signin-footer {
   margin-top: 1.5rem;
@@ -82,7 +82,7 @@
 }
 
 .signin-footer p {
-  color: white;
+  color: rgb(106, 29, 29);
 }
 
 
@@ -112,18 +112,10 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .container {
   max-width: 1400px;
   margin: 0 auto;
+  display: flex;
 }
 
 .video-page {
@@ -133,6 +125,7 @@
   width: 100%;
   align-items: center;
   justify-content: space-around;
+  margin: 0 auto; 
 
 }
 
@@ -142,41 +135,125 @@
 }
 
 .ide {
- margin-left: ;
  max-width: 50%;
 }
 
 .nav {
   display: flex;
-  margin-left: 80px;
   margin-top: 12px;
   font-weight: bold;
   font-size: 40px;
-  animation: rainbow 20s infinite;
+  margin-left: 68px;
+  color: white;
 }
 
 @keyframes rainbow {
-  0% {color: red;}
-  14% {color: rgb(0, 0, 0);}
-  28% {color: yellow;}
-  42% {color: green;}
-  57% {color: blue;}
-  71% {color: indigo;}
-  85% {color: violet;}
-  100% {color: red;}
+ 
 }
 
-.ide__top {
-  border: white;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 16px;
-  margin-bottom: 8px;
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin-right: 624px;
+  margin-bottom: 10px;
 }
 
-.ide__drop {
-  border: white;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 16px;
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 100px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border: 1px solid #dcdcdc;
 }
+
+.dropdown-content a {
+  color: black;
+  padding: 10px 14px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-button {
+  background-color: #f8f8f8;
+  color: black;
+  padding: 10px 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border: 1px solid #dcdcdc;
+}
+
+.arrow-down {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
+  margin-left: 5px;
+}
+
+
+.ide__btn {
+  background-color: transparent;
+
+  border: black;
+  cursor: pointer;
+  color: white;
+  margin-right: 28px;
+  padding: 8px 24px;
+  background-color: rgb(16, 253, 16);
+  border-radius: 4px;
+
+}
+
+
+.console {
+  display: flex;
+  background-color: white;
+  flex-direction: column;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.console-label {
+  /* position: absolute; /* This ensures the label stays at the bottom */
+  cursor: pointer;
+  margin-left: 14px;
+}
+
+.console__output {
+  flex: 0 1 auto; /* Allow the output to grow and shrink based on content */
+    overflow: hidden; /* Prevent content from spilling over */
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.console-label,
+.ide__btn {
+    flex: none; /* These elements will not grow or shrink */
+}
+
+.console__output.visible {
+  opacity: 1;
+  transform: translateY(0);  /* or any other maximum height you prefer */
+}
+
+.console-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  width: 100%; /* ensure the controls take the full width of their parent */
+}
+
