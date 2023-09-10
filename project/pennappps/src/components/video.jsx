@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import Webcam from 'react-webcam';
 import '../App.css';
 import Ide from './Ide';
+import github from '../assets/github-mark-white.svg'
 
 function VideoRecorder() {
     const webcamRef = useRef(null);
@@ -69,7 +70,7 @@ function VideoRecorder() {
                         ) : (
                             <button className="signin-button" onClick={handleStartRecording}>Start Recording</button>
                         )}
-                        {recordedChunks.length > 0 && <button className="signin-button" onClick={handleDownload}>Download Video</button>}
+                        {recordedChunks.length > 0 && <button className="signin-button download" onClick={handleDownload}>Download Video</button>}
                     </div>
                     </div>
                     <div>
@@ -78,6 +79,10 @@ function VideoRecorder() {
                 </div>
     
                 </div>
+                <a className='img-link' href="
+                ">
+                    <img className='img' src={github} alt="" />
+                </a>
             </div>
     );
 }
