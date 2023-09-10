@@ -41,10 +41,6 @@ def video_detect_text(path):
 def text_to_code_gpt(language, text):
     openai.api_key = openai_api_key
 
-    response = openai.Completion.create(
-      engine="text-davinci-002", 
-      prompt=f"Translate the following pseudo code into Python code:\n{text}",
-      max_tokens=100
 
     response = openai.ChatCompletion.create(
     model="gpt-3.5-turbo-16k",
@@ -90,11 +86,4 @@ def upload_video():
         return jsonify({'translated_code': translated_code})
 
 
-@app.route('/create_repo', methods = ['POST'])
-def create_repo():
-    
-
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
+# @app.route('/create_repo', methods = ['POST'])
