@@ -4,11 +4,14 @@ import io
 import openai  
 from google.cloud import videointelligence
 from dotenv import load_dotenv
+from metaphor_python import Metaphor
 
 load_dotenv()
 openai_api_key = os.environ.get("OPENAI_API_KEY")
 
 app = Flask(__name__)
+
+metaphor = Metaphor("b8da85fd-2ead-471b-bf4e-d74e719a2231")
 
 def video_detect_text(path):
     video_client = videointelligence.VideoIntelligenceServiceClient()
@@ -47,7 +50,7 @@ def text_to_code_gpt(language, text):
     model="gpt-3.5-turbo-16k",
     messages=[{
         "role": "user",
-        "content": f"Given the following abstract idea and pseudocode, translate it into functional {language} code. Please ensure that: 1. The code is functional and executable. 2. Assume that all necessary libraries are already imported. 3. Provide comments to explain complex or unintuitive parts of the code. 4. If the idea is too abstract, make reasonable assumptions to create functional code. {text}. Output functional {language} code:"
+        "content": f"Given the following abstract idea and pseudocode, translate it into functional {language} code. Please ensure that: 1. The code is functional and executable. 2. Assume that all necessary libraries are already imported. 3. Provide comments to explain complex or unintuitive parts of the code. 4. If the idea is too abstract, make reasonable assumptions to create functional code assuming the reader has {experience} level of experience {text}. Output functional {language} code:"
         }],
     temperature=1.3,
     max_tokens=2056,
@@ -55,9 +58,13 @@ def text_to_code_gpt(language, text):
     frequency_penalty=0,
     presence_penalty=0
     )
-    
+    assistance = metaphor.search(
+        f"give me articles on {last_15_words(response.choices[0].message.content)} in {language} meant for {experience} level of experience",
+        num_results=5,
+        use_autoprompt=True,
+    )
     code = response.choices[0].message.content
-    return code
+    return code, assistance
 
 @app.route('/upload', methods=['POST'])
 def upload_video():
