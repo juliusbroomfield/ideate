@@ -46,25 +46,23 @@ def video_detect_text(path):
         return None
 
 
-@app.route('')
-def text_to_code_gpt(language, text):
+@app.route('/textgpt', methods=['GET'])
+def text_to_code_gpt():
+    # For simplicity, I'm assuming `language` and `text` are constants here. You may want to retrieve them from the request if they are dynamic.
+    language = "python"  
+    text = "Some pseudocode or description"
+
     openai.api_key = openai_api_key
 
-    response = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo-16k",
-    messages=[{
-        "role": "user",
-        "content": f"Given the following abstract idea and pseudocode, translate it into functional {language} code. Please ensure that: 1. The code is functional and executable. 2. Assume that all necessary libraries are already imported. 3. Provide comments to explain complex or unintuitive parts of the code. 4. If the idea is too abstract, make reasonable assumptions to create functional code. {text}. STOP. After you have finished generating, you should provide Output functional {language} code:"
-        }],
-    temperature=1.3,
-    max_tokens=2056,
-    top_p=1,
-    frequency_penalty=0,
-    presence_penalty=0
+    response = openai.Completion.create(
+        model="text-davinci-002",
+        prompt=f"Translate the following pseudocode into {language}: {text}",
+        max_tokens=200
     )
     
-    code = response.choices[0].message.content
-    return code
+    code = response.choices[0].text.strip()
+    return jsonify({'code': code})
+
 
 
 def upload_video():
@@ -107,7 +105,7 @@ def upload_video():
         return jsonify({'translated_code': translated_code})
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/video', methods=['GET', 'POST'])
 def video():
     if request.method == 'POST':
         uploaded_file = request.files['file']
