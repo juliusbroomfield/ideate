@@ -10,6 +10,7 @@ import base64
 from string import printable
 from moviepy.editor import *
 import argparse
+from metaphor_python import Metaphor
 
 
 
@@ -46,23 +47,61 @@ def video_detect_text(path):
         return None
 
 
-@app.route('/textgpt', methods=['GET'])
-def text_to_code_gpt():
-    # For simplicity, I'm assuming `language` and `text` are constants here. You may want to retrieve them from the request if they are dynamic.
-    language = "python"  
-    text = "Some pseudocode or description"
 
+@app.route('/')
+def text_to_code_gpt(language, text):
     openai.api_key = openai_api_key
 
-    response = openai.Completion.create(
-        model="text-davinci-002",
-        prompt=f"Translate the following pseudocode into {language}: {text}",
-        max_tokens=200
+    response = openai.ChatCompletion.create(
+    model="gpt-3.5-turbo-16k",
+    messages=[{
+            "role": "user",
+            "content": f'''Given the following abstract idea and pseudocode, translate it into functional {language} code. Please ensure that the code is functional and executable; 
+            assume that all necessary libraries are already imported; provide comments to explain complex or unintuitive parts of the code assuming the reader has {experience} level of experience;
+            If the idea is too abstract, make reasonable assumptions to create functional code. Use the following abstract idea and pseudocode: {text}. 
+            From the abstract idea and pseudocode above, you will output functional {language} code. Strictly follow these guidelines for your output: Output this information, in this order: 
+            Functional code, Github repository name, and an exact 15 word summary. Begin each section with the character sequence ~~~. You should always begin each section with a character sequence. You should not output a summary of the prompt, each section should only output the pure answer.'''
+        }],
+    temperature=1.3,
+    max_tokens=2056,
+    top_p=1,
+    frequency_penalty=0,
+    presence_penalty=0
     )
     
-    code = response.choices[0].text.strip()
-    return jsonify({'code': code})
+    code = response.choices[0].message.content
+    sections = response.choices[0].message.content.split("~~~")
 
+    assistance = metaphor.search(
+    f"give me articles on {last_15_words(response.choices[0].message.content)} in {language} meant for {experience} level of experience",
+    num_results=5,
+    use_autoprompt=True,
+    type="keyword")
+
+    code = response.choices[0].message.content
+
+
+    functional_code = sections[1].strip()
+    repo_name = sections[2].strip()
+    summary = sections[3].strip()
+
+
+
+    assistance = metaphor.search(
+        f"give me articles on {last_15_words(response.choices[0].message.content)} in {language} meant for {experience} level of experience",
+        num_results=5,
+        use_autoprompt=True,
+        type="keyword")
+      
+    code = response.choices[0].message.content
+
+    
+    titles = tuple(result.title for result in assistance.results)
+    urls = tuple(result.url for result in assistance.results)
+    authors = tuple(result.author for result in assistance.results)
+    published_dates = tuple(result.published_date for result in assistance.results)
+
+    return json.dumps({'code': functional_code, 'repo_name': repo_name, 'title': titles, 'url': urls, 'authors': authors, 'published_date': published_dates})
 
 
 def upload_video():
