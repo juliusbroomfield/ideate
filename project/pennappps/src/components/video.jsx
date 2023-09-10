@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import Webcam from 'react-webcam';
+import '../App.css';
 
 function VideoRecorder() {
     const webcamRef = useRef(null);
@@ -49,19 +50,23 @@ function VideoRecorder() {
     };
 
     return (
-        <div>
-            <Webcam
-                audio={true}
-                ref={webcamRef}
-                style={{ width: '50%', display: 'block', marginLeft: 'auto', marginRight: 'auto' }} 
-            />
-            <div style={{ textAlign: 'center' }}>
-                {recording ? (
-                    <button onClick={handleStopRecording}>Stop Recording</button>
-                ) : (
-                    <button onClick={handleStartRecording}>Start Recording</button>
-                )}
-                {recordedChunks.length > 0 && <button onClick={handleDownload}>Download Video</button>}
+        <div className="App">
+            <div className="signin-page-container">
+                <div className="signin-content">
+                    <Webcam
+                        audio={true}
+                        ref={webcamRef}
+                        style={{ width: '100%', borderRadius: '10px', marginBottom: '1.5rem' }} 
+                    />
+                    <div className="signin-footer">
+                        {recording ? (
+                            <button className="signin-button" onClick={handleStopRecording}>Stop Recording</button>
+                        ) : (
+                            <button className="signin-button" onClick={handleStartRecording}>Start Recording</button>
+                        )}
+                        {recordedChunks.length > 0 && <button className="signin-button" onClick={handleDownload}>Download Video</button>}
+                    </div>
+                </div>
             </div>
         </div>
     );
