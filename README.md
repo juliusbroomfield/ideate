@@ -12,7 +12,7 @@
 
 ## Introduction
 
-Welcome to **Ideate**, a revolutionary platform that helps both developers and students quickly transform their pseudocode and high-level system design directly into production-level software in the language of their choice. This open-source project was developed by [Julius Broomfield](https://www.linkedin.com/in/juliusbroomfield/), [Shishir Vargheese](https://www.linkedin.com/in/shishir-vargheese/), [Ammaar Anjum]([https://github.com/AmmaarsCode](https://www.linkedin.com/in/ammaar-anjum-477898245/)), and [Ibrakhim Ustelbay](https://www.linkedin.com/in/ibrakhim/) to streamline the coding process and bridge the gap between ideas and implementation.
+Welcome to **Ideate**, a revolutionary platform that helps both developers and students quickly transform their pseudocode and high-level system design directly into production-level software in the language of their choice. This open-source project was developed by [Julius Broomfield](https://www.linkedin.com/in/juliusbroomfield/), [Shishir Vargheese](https://www.linkedin.com/in/shishir-vargheese/), [Ammaar Anjum](https://www.linkedin.com/in/ammaar-anjum-477898245/), and [Ibrakhim Ustelbay](https://www.linkedin.com/in/ibrakhim/) to streamline the coding process and bridge the gap between ideas and implementation.
 
 Ideate enables users to turn to classic whiteboard coding with a modern twist. Simply set up your webcam, turn on your microphone, ideate, and we'll take it from there. Whether you're a seasoned developer looking to turn your ideas into code or a student learning the ropes of software development, Ideate is your go-to platform for efficient coding.
 
