@@ -1,6 +1,6 @@
 # Ideate
 
-![Ideate Logo](project/pennappps/public/ideate logo.png)
+![Ideate Logo](https://github.com/JuliustheCreator/ideation/blob/main/project/pennappps/public/ideate%20logo.png)
 
 ## Table of Contents
 - [Introduction](#introduction)
