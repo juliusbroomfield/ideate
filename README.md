@@ -19,7 +19,7 @@ Ideate enables users to turn to classic whiteboard coding with a modern twist. S
 ## Features
 
 ### 1. Pseudocode to Production
-Easily transform your pseudocode and high-level system design into production-ready code in your preferred programming language.
+Easily transform your pseudocode and high-level system design into production-ready code in its own Github repository.
 
 ### 2. Webcam Coding
 Utilize the power of classic whiteboard coding with the convenience of modern technology. Set up your webcam, turn on your microphone, and start coding by speaking or sketching your ideas.
